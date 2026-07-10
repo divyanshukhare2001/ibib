@@ -1,3 +1,47 @@
+(() => {
+  const preloader = document.getElementById('preloader');
+  const percent = document.getElementById('preloaderPercent');
+  const bar = document.getElementById('preloaderBarFill');
+  const page = document.getElementById('page-wrap');
+
+  if (!preloader || !page) return;
+
+  const DURATION = 4800;
+  const start = performance.now();
+
+  function animate(now) {
+    const progress = Math.min((now - start) / DURATION, 1);
+    // const value = (1 - (1 - progress) ** 2) * 100;
+    const value = progress* 100;
+
+    percent.textContent = `${Math.round(value)}%`;
+    bar.style.width = `${value}%`;
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      preloader.classList.add('is-done');
+      page.classList.add('loaded');
+      preloader.addEventListener(
+        'transitionend',
+        () => preloader.remove(),
+        { once: true }
+      );
+      document.body.style.overflow = "auto";
+    }
+  }
+
+  requestAnimationFrame(animate);
+})();
+
+
+
+
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
   if (window.lucide) lucide.createIcons();
 
