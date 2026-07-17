@@ -275,18 +275,61 @@ contactForm.addEventListener('submit', (e) => {
   const eventsNavList = document.getElementById('eventsNavList');
   if (eventsNavList) {
     const featureImage = document.getElementById('eventsFeatureImage');
+    const featureVideo = document.getElementById('eventsFeatureVideo');
     const featureCategory = document.getElementById('eventsFeatureCategory');
     const featureTitle = document.getElementById('eventsFeatureTitle');
     const featureDate = document.getElementById('eventsFeatureDate');
     const featureLocation = document.getElementById('eventsFeatureLocation');
     const featureDesc = document.getElementById('eventsFeatureDesc');
     const navItems = eventsNavList.querySelectorAll('.events__nav-item');
+    const featureVideoBg = document.getElementById("eventsFeatureVideoBg");
 
     function activateEvent(item) {
       navItems.forEach((el) => el.classList.remove('is-active'));
       item.classList.add('is-active');
 
-      featureImage.style.backgroundImage = `url('${item.dataset.image}')`;
+      // featureImage.style.backgroundImage = `url('${item.dataset.image}')`;
+      if (item.dataset.video) {
+
+    featureVideo.src = item.dataset.video;
+    featureVideo.style.display = "block";
+    featureVideo.play();
+
+    featureImage.style.backgroundImage = "none";
+    featureVideo.src = item.dataset.video;
+featureVideoBg.src = item.dataset.video;
+
+featureVideo.style.display = "block";
+featureVideoBg.style.display = "block";
+
+featureVideo.load();
+featureVideoBg.load();
+
+featureVideo.play();
+featureVideoBg.play();
+
+featureImage.style.backgroundImage = "none";
+
+} else {
+
+  featureVideo.pause();
+featureVideoBg.pause();
+
+featureVideo.style.display = "none";
+featureVideoBg.style.display = "none";
+
+featureVideo.removeAttribute("src");
+featureVideoBg.removeAttribute("src");
+
+featureImage.style.backgroundImage = `url('${item.dataset.image}')`;
+
+    featureVideo.pause();
+    featureVideo.removeAttribute("src");
+    featureVideo.load();
+    featureVideo.style.display = "none";
+
+    featureImage.style.backgroundImage = `url('${item.dataset.image}')`;
+}
       featureCategory.textContent = item.dataset.category;
       featureTitle.textContent = item.dataset.title;
       featureDate.textContent = item.dataset.date;
@@ -297,5 +340,11 @@ contactForm.addEventListener('submit', (e) => {
     navItems.forEach((item) => {
       item.addEventListener('click', () => activateEvent(item));
     });
+
+
+    const defaultItem = eventsNavList.querySelector(".events__nav-item.is-active") || navItems[0]; activateEvent(defaultItem);
+
+
   }
 });
+
