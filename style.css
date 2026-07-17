@@ -942,8 +942,8 @@ span.navbar__brand-icon-1 {
 }
 
 .packages__grid .package-card:first-child {
-    border: 4px solid var(--gold-500);
-    box-shadow: 1px 1px 3px var(--gold-400);
+    border: 4px solid var(--gold-500) !important;
+    box-shadow: 1px 1px 3px var(--gold-400) !important;
 }
 
 .package-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-6px); }
